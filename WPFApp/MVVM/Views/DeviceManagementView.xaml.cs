@@ -12,19 +12,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WPFApp.Helpers;
+using WebApi.Services;
+using WPFApp.MVVM.Models;
 using WPFApp.MVVM.ViewModels;
 
-namespace WPFApp
+namespace WPFApp.MVVM.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for DeviceManagementView.xaml
     /// </summary>
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
+    public partial class DeviceManagementView : UserControl
+    {        
+        public DeviceManagementView()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
+        
     }
 }

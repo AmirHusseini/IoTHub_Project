@@ -1,0 +1,102 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="tilePanel" TargetType="Border">
+        <Setter Property="Background" Value="#3f3f40" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="Padding" Value="20" />
+        <Setter Property="Width" Value="200" />
+        <Setter Property="Height" Value="200" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="20" Opacity="0.5" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="tilePanelState" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Margin" Value="0 0 50 0" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Text" Value="{Binding ElementName=tile,Path=StateInActive}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=toggleButton,Path=IsChecked}" Value="True">
+                <Setter Property="Text" Value="{Binding ElementName=tile,Path=StateActive}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ElementName=toggleButton,Path=IsChecked}" Value="False">
+                <Setter Property="Text" Value="{Binding ElementName=tile,Path=StateInActive}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <Style x:Key="tilePanelToggleButton" TargetType="ToggleButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid>
+                        <Border x:Name="toggleBackground" Background="#999999" CornerRadius="13" Height="25" Width="50" />
+                        <Ellipse x:Name="toggleSwitch" Fill="#3f3f40" Height="22" Width="22" HorizontalAlignment="Left" Margin="2 0 0 0" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ThicknessAnimation Storyboard.TargetName="toggleSwitch" Storyboard.TargetProperty="Margin" To="26 0 0 0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ThicknessAnimation Storyboard.TargetName="toggleSwitch" Storyboard.TargetProperty="Margin" To="2 0 0 0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="tilePanelIcon" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontAwesome-Regular}" />
+        <Setter Property="FontSize" Value="62" />
+        <Setter Property="Margin" Value="0 0 0 10" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Text" Value="{Binding ElementName=tile,Path=IconInActive}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=toggleButton,Path=IsChecked}" Value="True">
+                <Setter Property="Text" Value="{Binding ElementName=tile,Path=IconActive}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ElementName=toggleButton,Path=IsChecked}" Value="False">
+                <Setter Property="Text" Value="{Binding ElementName=tile,Path=IconInActive}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="tilePanelDeviceName" TargetType="TextBlock">
+        <Setter Property="Text" Value="{Binding ElementName=tile,Path=DeviceName}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="tilePanelDeviceType" TargetType="TextBlock">
+        <Setter Property="Text" Value="{Binding ElementName=tile,Path=DeviceType}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+</ResourceDictionary>

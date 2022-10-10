@@ -1,5 +1,7 @@
 ﻿using Microsoft.Azure.Devices;
+using Microsoft.Azure.Devices.Client;
 using Microsoft.Azure.Devices.Shared;
+using Microsoft.Rest;
 
 namespace WebApi.Services
 {
@@ -7,22 +9,22 @@ namespace WebApi.Services
     {
         private readonly IConfiguration _config;
         private readonly RegistryManager _registryManager;
-
+        
         public DeviceManagerService(IConfiguration config)
         {
             _config = config;
             _registryManager = RegistryManager.CreateFromConnectionString(_config.GetConnectionString("IoTHub"));
         }
 
-        public async Task<string> CreateDeviceAsync(string deviceId)
+        public async Task<Device> CreateDeviceAsync(string deviceId)
         {
             try
             {
                 var device = await _registryManager.AddDeviceAsync(new Device(deviceId));
-
+                
                 if (device != null)
                 {
-                    return device.Authentication.SymmetricKey.PrimaryKey;
+                    return device;
                 }
             }
 
@@ -35,7 +37,26 @@ namespace WebApi.Services
             return null!;
         }
 
-        public async Task<Twin> GetDeviceByIdAsync(string deviceId)
+        public async Task<Device> GetDeviceByIdAsync(string deviceId)
+        {
+            try
+            {
+                var device = await _registryManager.GetDeviceAsync(deviceId);
+
+                if (device != null)
+                {
+                    return device;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return null!;
+        }
+
+        public async Task<Twin> GetDeviceTwinByIdAsync(string deviceId)
         {
             try
             {
@@ -53,15 +74,14 @@ namespace WebApi.Services
             }
             return null!;
         }
-
-        public async Task<IEnumerable<Twin>> GetAllDevicesAsync(string query = "SELECT * FROM devices")
+        public async Task<IEnumerable<Twin>> GetAllDevicesTwinAsync(string query = "SELECT * FROM devices")
         {
             var devices = new List<Twin>();
 
             try
             {
                 var result = _registryManager.CreateQuery(query);
-
+                
                 if (result.HasMoreResults)
                 {
                     foreach (var twin in await result.GetNextAsTwinAsync())
@@ -78,6 +98,30 @@ namespace WebApi.Services
             return devices;
         }
 
+        [Obsolete]
+        public async Task<IEnumerable<Device>> GetAllDevicesAsync()
+        {
+            var devices = new List<Device>();
+
+            try
+            {
+                var result = await _registryManager.GetDevicesAsync(1000);
+
+                if (result != null)
+                {
+                    foreach (var device in result)
+                    {
+                        devices.Add(device);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return devices;
+        }
         public async Task<bool> DeleteDeviceAsync(string deviceId)
         {
             try

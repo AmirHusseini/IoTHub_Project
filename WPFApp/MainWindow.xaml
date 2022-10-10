@@ -3,10 +3,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPFApp"
+        xmlns:local="clr-namespace:WPFApp" xmlns:views="clr-namespace:WPFApp.MVVM.Views" xmlns:viewModels="clr-namespace:WPFApp.MVVM.ViewModels" xmlns:components="clr-namespace:WPFApp.Components"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"        
+        Title="MainWindow" Height="720" Width="1280">
 
-    </Grid>
+    <Border Background="#3f3f40">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <ContentControl Content="{Binding CurrentViewModel}">
+            <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type viewModels:KitchenViewModel}">
+                        <views:KitchenView />
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
+            <components:MainMenuComponent Grid.Row="1" Margin="0 -140 0 0" />
+        </Grid>
+    </Border>
 </Window>

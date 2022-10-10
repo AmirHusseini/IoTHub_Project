@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Devices;
+using Microsoft.Azure.Devices.Shared;
 using WebApi.Data;
 using WebApi.Services;
 
@@ -16,12 +18,18 @@ namespace WebApi.Controllers
             _deviceManager = deviceManager;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("twins")]
+        public async Task<IActionResult> GetAllTwins()
         {
-            return new OkObjectResult(await _deviceManager.GetAllDevicesAsync());
+            var twins = await _deviceManager.GetAllDevicesTwinAsync();
+            return twins != null ? new OkObjectResult(twins) : new NotFoundResult();
         }
-
+        [HttpGet]
+        public async Task<IActionResult> GetAllDevices()
+        {
+            var devices = await _deviceManager.GetAllDevicesAsync();
+            return devices != null ? new OkObjectResult(devices) : new NotFoundResult();
+        }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
@@ -29,11 +37,18 @@ namespace WebApi.Controllers
             return device != null ? new OkObjectResult(device) : new NotFoundResult();
         }
 
+        [HttpGet("twins/{id}")]
+        public async Task<IActionResult> GetDeviceTwinById(string id)
+        {
+            var twin = await _deviceManager.GetDeviceTwinByIdAsync(id);
+            return twin != null ? new OkObjectResult(twin) : new NotFoundResult();
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateOne(DeviceRequest device)
         {
-            var key = await _deviceManager.CreateDeviceAsync(device.DeviceId);
-            return key != null ? new OkObjectResult(key) : new BadRequestResult();
+            var result = await _deviceManager.CreateDeviceAsync(device.DeviceId);
+            return result != null ? new OkObjectResult(result) : new BadRequestResult();
         }
 
         [HttpDelete("{id}")]

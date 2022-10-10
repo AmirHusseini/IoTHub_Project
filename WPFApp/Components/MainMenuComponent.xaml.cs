@@ -12,19 +12,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WPFApp.Helpers;
-using WPFApp.MVVM.ViewModels;
 
-namespace WPFApp
+namespace WPFApp.Components
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainMenuComponent.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainMenuComponent : UserControl
     {
-        public MainWindow()
+        public MainMenuComponent()
         {
             InitializeComponent();
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

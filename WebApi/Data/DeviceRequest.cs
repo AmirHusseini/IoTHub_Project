@@ -1,4 +1,6 @@
-﻿namespace WebApi.Data
+﻿using Microsoft.Azure.Devices.Shared;
+
+namespace WebApi.Data
 {
     public class DeviceRequest
     {
