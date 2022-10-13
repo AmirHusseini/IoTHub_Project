@@ -23,9 +23,6 @@ namespace Device.ConsoleApp.Models
 
         [JsonProperty("location")]
         public string Location { get; set; } = null!;
-        
-        [JsonProperty("owner")]
-        public string Owner { get; set; } = "";
 
         [JsonProperty("interval")]
         public int Interval { get; set; } = 10000;

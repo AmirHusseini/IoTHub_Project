@@ -48,18 +48,27 @@ namespace WPFApp.Components
 
         private async void AddaNewDevice_Click(object sender, RoutedEventArgs e)
         {
-            deviceId = DeviceIdTxt.Text;
-            string owner = Owndertxt.Text;
-            string devicetype = DeviceTypetxt.Text;
-            string location = Locationtxt.Text;
+            var deviceId = Guid.NewGuid();
+            //string deviceName = DeviceNameTxt.Text;
+            //var deviceState = false;
+            //string deviceType = DeviceTypetxt.Text;
+            //string location = Locationtxt.Text;
+            //int interval = 
             using var client = new HttpClient();
             var response = await client.PostAsJsonAsync(baseurl, new { deviceId = deviceId });
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadAsStringAsync();
-
+                //var result = await response.Content.ReadFromJsonAsync<Device>();
+                //DeviceClient deviceClient = DeviceClient.CreateFromConnectionString($"{result.Authentication.SymmetricKey.PrimaryKey}");
+                //deviceClient.GetTwinAsync().Wait();
+                //TwinCollection twinCollection = new TwinCollection();
+                //twinCollection["deviceName"] = $"{deviceName}";
+                //twinCollection["deviceType"] = $"{deviceType}";
+                //twinCollection["deviceState"] = $"{deviceState}";
+                //twinCollection["location"] = $"{location}";
+                //twinCollection["interval"] = $"{deviceItem.Interval}";
                 MessageBox.Show($"New Device {deviceId} added!");
-                DeviceIdTxt.Text = "";
+                DeviceNameTxt.Text = "";
             }
         }
 

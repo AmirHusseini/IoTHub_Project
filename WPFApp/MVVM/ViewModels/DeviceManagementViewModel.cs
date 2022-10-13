@@ -19,131 +19,141 @@ using System.Windows.Threading;
 using WebApi.Services;
 using WPFApp.MVVM.Cores;
 using WPFApp.MVVM.Models;
+using WPFApp.Services;
 
 namespace WPFApp.MVVM.ViewModels
 {
     internal class DeviceManagementViewModel : BaseViewModel
-    {
+    {        
+        private readonly IDeviceService _deviceService;
+        private readonly INavigationService _navigationStore;
+
         private DispatcherTimer timer;
-        private ObservableCollection<DeviceItem> _deviceItems;
-        private readonly string baseurl = "https://iotproject-webapi.azurewebsites.net/api/devices/";
-        public DeviceManagementViewModel()
+        private Device device;
+
+        public DeviceManagementViewModel(INavigationService navigationStore, IDeviceService deviceService)
         {
-            _deviceItems = new ObservableCollection<DeviceItem>();
+            DeviceItems = new ObservableCollection<DeviceItem>();
+            _navigationStore = navigationStore;
+            _deviceService = deviceService;
+
+            SetClock();
             PopulateDeviceItemsAsync().ConfigureAwait(false);
-            SetInterval(TimeSpan.FromSeconds(3));
         }
 
 
-        public string Title { get; set; } = "Device Management";
-        public string Temperature { get; set; }
-        public string Humidity { get; set; }
-        public IEnumerable<DeviceItem> DeviceItems => _deviceItems;
-        public List<Twin> Twins = new List<Twin>();
+        public string Title => "Device Management";
 
-
-        private void SetInterval(TimeSpan interval)
+        private ObservableCollection<DeviceItem>? _deviceItems;
+        public ObservableCollection<DeviceItem>? DeviceItems
         {
-            timer = new DispatcherTimer()
+            get => _deviceItems;
+            set
             {
-                Interval = interval
-            };
-
-            timer.Tick += new EventHandler(timer_tick);
-            timer.Start();
-        }
-
-        private async void timer_tick(object sender, EventArgs e)
-        {
-
-            await PopulateDeviceItemsAsync();
-            await UpdateDeviceItemsAsync();
-        }
-
-
-        private async Task UpdateDeviceItemsAsync()
-        {
-            using var client = new HttpClient();
-            foreach (var item in _deviceItems.ToList())
-            {
-                var device = await client.GetAsync(baseurl + item.DeviceId);
-                if (device == null)
-                    _deviceItems.Remove(item);
+                _deviceItems = value;
+                OnPropertyChanged();
             }
+        }
+        private string? _currentTime;
+        public string CurrentTime
+        {
+            get => _currentTime!;
+            set
+            {
+                _currentTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string? _currentDate;
+        public string CurrentDate
+        {
+            get => _currentDate!;
+            set
+            {
+                _currentDate = value;
+                OnPropertyChanged();
+            }
+        }
+        private string? _currentTemperature;
+        public string CurrentTemperature
+        {
+            get => _currentTemperature!;
+            set
+            {
+                _currentTemperature = value;
+                OnPropertyChanged();
+            }
+        }
+        private string? _currentHumidity;
+        public string CurrentHumidity
+        {
+            get => _currentHumidity!;
+            set
+            {
+                _currentHumidity = value;
+                OnPropertyChanged();
+            }
+        }
+        private string? _currentWeatherCondition;
+        public string CurrentWeatherCondition
+        {
+            get => _currentWeatherCondition!;
+            set
+            {
+                _currentWeatherCondition = value;
+                OnPropertyChanged();
+            }
+        }
+        protected override async void second_timer_tick(object? sender, EventArgs e)
+        {
+            SetClock();
+            await PopulateDeviceItemsAsync();
+            base.second_timer_tick(sender, e);
+        }
+
+        private string _deviceId;
+
+        public string deviceId
+        {
+            get { return _deviceId; }
+            set { _deviceId = value; }
+        }
+
+        private void SetClock()
+        {
+            CurrentTime = DateTime.Now.ToString("HH:mm");
+            CurrentDate = DateTime.Now.ToString("dd MMMM yyyy");
+        }
+
+        private async Task AddDeviceAsync()
+        {
+
+            device = await _deviceService.GetDeviceAsync(deviceId); 
+        }
+
+        private async Task RemoveDeviceAsync()
+        {
+
+            var s = await _deviceService.GetDeviceAsync(deviceId);
         }
 
         private async Task PopulateDeviceItemsAsync()
         {
-            using var client = new HttpClient();
-            var result = client.GetStringAsync(baseurl).Result;
-            var s = JsonConvert.DeserializeObject<IEnumerable<dynamic>>(result);
-            foreach (var item in s)
+            var result = await _deviceService.GetDevicesAsync("SELECT * FROM devices");
+
+            result.ForEach(device =>
             {
-                
-                //var t = await client.GetAsync(baseurl + "twin/" + item.deviceId);
-                //var res3 = t.Content.ReadAsStringAsync().Result;
-                //Twin twin = new Twin();
-                //twin.DeviceId = res3.deviceId;
-                //Twins.Add(twin);
-            }
-            var result1 = await client.GetAsync(baseurl);
-            var res = result1.Content.ReadAsStringAsync().Result;
-            //var json = JsonConvert.DeserializeObject<IEnumerable<Twin>>(res);
-
-            //if (result != null)
-            //{
-            //    foreach (Twin twin in json.ToList())
-            //    {
-            //        var device = _deviceItems.FirstOrDefault(x => x.DeviceId == twin.DeviceId);
-
-            //        if (device == null)
-            //        {
-            //            device = new DeviceItem
-            //            {
-            //                DeviceId = twin.DeviceId,
-            //            };
-
-            //            try { device.DeviceName = twin.Properties.Reported["deviceName"]; }
-            //            catch { device.DeviceName = device.DeviceId; }
-            //            try { device.DeviceType = twin.Properties.Reported["deviceType"]; }
-            //            catch { }
-            //            try { Temperature = twin.Properties.Desired["temperature"]; }
-            //            catch { }
-            //            try { Humidity = twin.Properties.Desired["humidity"]; }
-            //            catch { }
-            //            switch (device.DeviceType.ToLower())
-            //            {
-            //                case "fan":
-            //                    device.IconActive = "\uf863";
-            //                    device.IconInActive = "\uf863";
-            //                    device.StateActive = "ON";
-            //                    device.StateInActive = "OFF";
-            //                    break;
-
-            //                case "light":
-            //                    device.IconActive = "\uf672";
-            //                    device.IconInActive = "\uf0eb";
-            //                    device.StateActive = "ON";
-            //                    device.StateInActive = "OFF";
-            //                    break;
-
-            //                default:
-            //                    device.IconActive = "\uf2db";
-            //                    device.IconInActive = "\uf2db";
-            //                    device.StateActive = "ENABLE";
-            //                    device.StateInActive = "DISABLE";
-            //                    break;
-            //            }
-
-            //            _deviceItems.Add(device);
-            //        }
-            //        else { }
-            //    }
-            //}
-            //else
-            //{
-            //    _deviceItems.Clear();
-            //}
+                var item = DeviceItems?.FirstOrDefault(x => x.DeviceId == device.DeviceId);
+                if (item == null)
+                    DeviceItems?.Add(device);
+                else
+                {
+                    var index = _deviceItems!.IndexOf(item);
+                    _deviceItems[index] = device;
+                }
+            });
         }
+
     }
 }

@@ -12,5 +12,59 @@
         <Border.Background>
             <ImageBrush Opacity="0.75" ImageSource="/Assets/Images/livingroom.jpeg" />
         </Border.Background>
+
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <TextBlock Text="&#xE753;" FontFamily="Segoe MDL2 Assets" FontSize="62" Margin="0 0 15 0" Foreground="LightGray" />
+                    <TextBlock FontSize="22" Foreground="LightGray" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Run Text="{Binding CurrentTemperature}" FontSize="32" />
+                        <Run Text="°C" />
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding CurrentTime}" FontSize="42" Foreground="LightGray" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding CurrentDate}" FontSize="22" Foreground="LightGray" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding Title}" FontSize="42" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <ItemsControl Grid.Column="1" x:Name="deviceTileListView" ItemsSource="{Binding DeviceItems}" HorizontalContentAlignment="Right" VerticalAlignment="Center">
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <components:TileComponent 
+                            IsChecked="{Binding DeviceState}"
+                            DeviceName="{Binding DeviceName}" 
+                            DeviceType="{Binding DeviceType}"
+                            IconActive="{Binding IconActive}"
+                            IconInActive="{Binding IconInActive}"
+                            />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel MaxWidth="{Binding ActualWidth, ElementName=deviceTileListView}" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                </ItemsControl>
+            </Grid>
+        </Grid>
+
     </Border>
 </UserControl>

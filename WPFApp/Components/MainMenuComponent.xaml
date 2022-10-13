@@ -5,14 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFApp.Components"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Border Style="{StaticResource mainMenuBar}">
-        <StackPanel Orientation="Horizontal">
-            <RadioButton Command="{Binding KitchenViewCommand}" Style="{StaticResource mainMenuButton}" Content="&#xe01d;" IsChecked="True"/>
-            <RadioButton Command="{Binding BedroomViewCommand}" Style="{StaticResource mainMenuButton}" Content="&#xf8f7;" />
-            <RadioButton Command="{Binding LivingroomViewCommand}" Style="{StaticResource mainMenuButton}" Content="&#xf79a;" />
-            <RadioButton Command="{Binding DeviceManagementViewCommand}" Style="{StaticResource mainMenuButton}" Content="&#xf2db;" />
-            <RadioButton Style="{StaticResource mainMenuButton}" Content="&#xf011;" x:Name="btnClose" Click="btnClose_Click" />
-        </StackPanel>
+             d:DesignHeight="700" d:DesignWidth="1280">
+    <Border Background="#3f3f40">
+        <Grid>
+
+            <ContentControl Content="{Binding ContentViewModel}" />
+            <StackPanel  Margin="50" VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal"  DataContext="{Binding NavigationBarViewModel}">
+                <RadioButton Command="{Binding NavigateHomeCommand}" Style="{StaticResource mainMenuButton}" Content="&#xf8f3;" IsChecked="True"/>
+                <RadioButton Command="{Binding NavigateKitchenCommand}" Style="{StaticResource mainMenuButton}" Content="&#xe01d;" />
+                <RadioButton Command="{Binding NavigateBedroomCommand}" Style="{StaticResource mainMenuButton}" Content="&#xf8f7;" />
+                <RadioButton Command="{Binding NavigateLivingroomCommand}" Style="{StaticResource mainMenuButton}" Content="&#xf79a;" />
+                <RadioButton Command="{Binding NavigateDeviceManagementCommand}" Style="{StaticResource mainMenuButton}" Content="&#xf2db;" />
+                <RadioButton Style="{StaticResource mainMenuButton}" Content="&#xf011;" x:Name="btnClose" Click="btnClose_Click" />
+            </StackPanel>
+        </Grid>
     </Border>
 </UserControl>

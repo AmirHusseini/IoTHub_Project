@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="WPFApp.MVVM.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFApp.MVVM.Views" xmlns:views="clr-namespace:WPFApp.MVVM.Views" xmlns:viewmodels="clr-namespace:WPFApp.MVVM.ViewModels" xmlns:components="clr-namespace:WPFApp.Components"
+             mc:Ignorable="d" 
+            d:DesignHeight="720" d:DesignWidth="1280"
+            >
+<Border CornerRadius="12">
+        <Border.Background>
+            <ImageBrush Opacity="0.75" ImageSource="/Assets/Images/spacebackground.jpg"/>
+        </Border.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border Background="CornflowerBlue" Margin="190,70,30,30" CornerRadius="15">
+                <Label Width="200" Foreground="White" HorizontalContentAlignment="Center" FontSize="20" Height="50" Content="Weather Today" Margin="70,10,70,200"/>
+            
+        </Border>
+        <Border Grid.Column="1" Background="CadetBlue" Margin="30,70,190,30" CornerRadius="15">
+            <Label Width="200" Foreground="White" HorizontalContentAlignment="Center" FontSize="20" Height="50" Content="Calender" Margin="70,10,70,200"/>
+        </Border>
+        <Border Grid.Row="1" Background="DarkKhaki" Margin="190,30,30,70" CornerRadius="15">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Width="200" Foreground="White" HorizontalContentAlignment="Center" FontSize="20" Height="50" Content="To Do"/>
+                
+                <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" Margin="50">
+                    <TextBox Text="- Finish the project" Background="Transparent"/>
+                    <TextBox Text="- Eat" Background="Transparent"/>
+                    <TextBox Text="- Finish the project" Background="Transparent"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+    </Grid>
+    </Border>
+</UserControl>

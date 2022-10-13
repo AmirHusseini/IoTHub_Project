@@ -17,41 +17,116 @@ namespace WPFApp
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
-    {
-        public static IHost? app { get; private set; }
+    {        
+        private readonly IServiceProvider _serviceProvider;
 
         public App()
         {
-            app = Host.CreateDefaultBuilder().ConfigureServices((context, services) =>
+            IServiceCollection services = new ServiceCollection();
+
+
+            services.AddSingleton<NavigationStore>();
+
+            services.AddSingleton<INavigationService>(s => CreateHomeNavigationService(s));
+            services.AddScoped<IDeviceService, DeviceService>();
+            services.AddScoped<IGetCurrentWeatherOutside, GetCurrentWeatherOutside>();
+            services.AddScoped<IGetEventData, GetEventData>();
+            services.AddTransient<HomeViewModel>();
+
+            services.AddTransient<KitchenViewModel>(s => new KitchenViewModel(
+                CreateKitchenNavigationService(s),
+                s.GetRequiredService<IDeviceService>(),
+                s.GetRequiredService<IGetEventData>()
+                ));
+
+            services.AddTransient<BedroomViewModel>(s => new BedroomViewModel(
+                CreateBedroomNavigationService(s),
+                s.GetRequiredService<IDeviceService>()
+                ));
+
+            services.AddTransient<LivingroomViewModel>(s => new LivingroomViewModel(
+                CreateLivingroomNavigationService(s), 
+                s.GetRequiredService<IDeviceService>(),
+                s.GetRequiredService<IGetCurrentWeatherOutside>()));
+
+            services.AddTransient<DeviceManagementViewModel>(s => new DeviceManagementViewModel(
+                CreateDeviceNavigationService(s),
+                s.GetRequiredService<IDeviceService>()
+                ));
+
+            services.AddTransient<NavigationBarViewModel>(CreateNavigationBarViewModel);
+
+            services.AddSingleton<MainViewModel>();
+
+            services.AddSingleton<MainWindow>(s => new MainWindow()
             {
+                DataContext = s.GetRequiredService<MainViewModel>()
+            });
 
-                services.AddSingleton<MainWindow>();
-                services.AddSingleton<NavigationStore>();
-                services.AddScoped<IDeviceService, DeviceService>();
-                services.AddScoped<IGetEventData, GetEventData>();
-
-            }).Build();
+            _serviceProvider = services.BuildServiceProvider();
         }
 
-        protected override async void OnStartup(StartupEventArgs e)
+        protected override void OnStartup(StartupEventArgs e)
         {
-            var navigationStore = app!.Services.GetRequiredService<NavigationStore>();
-            var deviceService = app!.Services.GetRequiredService<IDeviceService>();
-            var getEventData = app!.Services.GetRequiredService<IGetEventData>();
-            navigationStore.CurrentViewModel = new KitchenViewModel(navigationStore, deviceService, getEventData);
+            INavigationService initialNavigationService = _serviceProvider.GetRequiredService<INavigationService>();
+            initialNavigationService.Navigate();
 
-            await app!.StartAsync();
-            var MainWindow = app.Services.GetRequiredService<MainWindow>();
-            MainWindow.DataContext = new MainViewModel(navigationStore);
+            MainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             MainWindow.Show();
 
             base.OnStartup(e);
         }
 
-        protected override async void OnExit(ExitEventArgs e)
+        private INavigationService CreateHomeNavigationService(IServiceProvider serviceProvider)
         {
-            await app!.StopAsync();
-            base.OnExit(e);
+            return new LayoutNavigationService<HomeViewModel>(
+                serviceProvider.GetRequiredService<NavigationStore>(),
+                () => serviceProvider.GetRequiredService<HomeViewModel>(),                
+                () => serviceProvider.GetRequiredService<NavigationBarViewModel>());
         }
+
+
+        private INavigationService CreateLivingroomNavigationService(IServiceProvider serviceProvider)
+        {
+            return new LayoutNavigationService<LivingroomViewModel>(
+                serviceProvider.GetRequiredService<NavigationStore>(),
+                () => serviceProvider.GetRequiredService<LivingroomViewModel>(),
+                () => serviceProvider.GetRequiredService<NavigationBarViewModel>());
+        }
+        private INavigationService CreateKitchenNavigationService(IServiceProvider serviceProvider)
+        {
+            return new LayoutNavigationService<KitchenViewModel>(
+                serviceProvider.GetRequiredService<NavigationStore>(),
+                () => serviceProvider.GetRequiredService<KitchenViewModel>(),
+                () => serviceProvider.GetRequiredService<NavigationBarViewModel>());
+        }
+        private INavigationService CreateBedroomNavigationService(IServiceProvider serviceProvider)
+        {
+            return new LayoutNavigationService<BedroomViewModel>(
+                serviceProvider.GetRequiredService<NavigationStore>(),
+                () => serviceProvider.GetRequiredService<BedroomViewModel>(),
+                () => serviceProvider.GetRequiredService<NavigationBarViewModel>()
+                );
+        }
+        private INavigationService CreateDeviceNavigationService(IServiceProvider serviceProvider)
+        {
+            return new LayoutNavigationService<DeviceManagementViewModel>(
+                serviceProvider.GetRequiredService<NavigationStore>(),
+                () => serviceProvider.GetRequiredService<DeviceManagementViewModel>(),
+                () => serviceProvider.GetRequiredService<NavigationBarViewModel>()
+                );
+        }
+        private NavigationBarViewModel CreateNavigationBarViewModel(IServiceProvider serviceProvider)
+        {
+            return new NavigationBarViewModel(
+                CreateHomeNavigationService(serviceProvider),
+                CreateKitchenNavigationService(serviceProvider),
+                CreateBedroomNavigationService(serviceProvider),
+                CreateLivingroomNavigationService(serviceProvider),
+                CreateDeviceNavigationService(serviceProvider)
+                );
+        }
+
+        
     }
 }

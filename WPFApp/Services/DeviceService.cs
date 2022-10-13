@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using WPFApp.MVVM.Models;
@@ -16,12 +18,27 @@ namespace WPFApp.Services
     internal interface IDeviceService
     {
         public Task<List<DeviceItem>> GetDevicesAsync(string query);
-        //public Task<CloudToDeviceMethodResult> SendDirectMethodAsync(DirectMethodRequest directMethodRequest);
+        public Task<Device> AddDeviceAsync(DeviceItem deviceItem);
+        public Task RemoveDeviceAsync(string id);
+        public Task<Device> GetDeviceAsync(string id);
     }
 
     internal class DeviceService : IDeviceService
     {
         private readonly string connectionString = "HostName=kyh-iothub-2.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=oj0gqypXDJVBFRzURDHu3zM7Xcu0H2AXRwl7o9/JMiw=";
+        private readonly string baseurl = "https://iotproject-webapi.azurewebsites.net/api/devices/";
+
+        public Task<Device> AddDeviceAsync(DeviceItem deviceItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Device> GetDeviceAsync(string id)
+        {
+            using var client = new HttpClient();
+            var device = await client.GetFromJsonAsync<Device>(baseurl + id);
+            return device;
+        }
 
         public async Task<List<DeviceItem>> GetDevicesAsync(string query)
         {
@@ -34,7 +51,6 @@ namespace WPFApp.Services
 
                 if (result.HasMoreResults)
                 {
-//                    var s = await result.GetNextAsTwinAsync();
                     foreach (var twin in await result.GetNextAsTwinAsync())
                     {
                         var device = new DeviceItem
@@ -65,6 +81,11 @@ namespace WPFApp.Services
                                 device.IconInActive = "\uf0eb";
                                 break;
 
+                            case "tv":
+                                device.IconActive = "\uf8e6";
+                                device.IconInActive = "\uf26c";
+                                break;
+
                             default:
                                 device.IconActive = "\uf2db";
                                 device.IconInActive = "\uf2db";
@@ -80,22 +101,11 @@ namespace WPFApp.Services
             return devices;
         }
 
-        //public async Task<CloudToDeviceMethodResult> SendDirectMethodAsync(DirectMethodRequest directMethodRequest)
-        //{
-        //    try
-        //    {
-        //        using var serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
-
-        //        var cloudToDeviceMethod = new CloudToDeviceMethod(directMethodRequest.MethodName);
-        //        if (directMethodRequest.Payload != null)
-        //            cloudToDeviceMethod.SetPayloadJson(JsonConvert.SerializeObject(directMethodRequest.Payload));
-
-        //        var result = await serviceClient.InvokeDeviceMethodAsync(directMethodRequest.DeviceId, cloudToDeviceMethod);
-        //        return result;
-        //    }
-        //    catch { }
-
-        //    return null!;
-        //}
+        public async Task RemoveDeviceAsync(string id)
+        {
+            using var client = new HttpClient();
+            var device = await client.DeleteAsync(baseurl + id);
+           
+        }
     }
 }

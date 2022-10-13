@@ -7,30 +7,31 @@
              mc:Ignorable="d" 
              x:Name="tile"
              >
-    <Border Style="{StaticResource tilePanel}">
-        <Grid>
+    <Button Click="Button_Click" Style="{StaticResource tilePanel}">
+        <Grid Style="{StaticResource device_tile_grid}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <CheckBox x:Name="deviceToggleSwitch" IsChecked="{Binding DeviceState}" Grid.Column="1" Style="{StaticResource tilePanelToggleButton }" HorizontalAlignment="Right"/>
+            
 
-                <TextBlock Grid.Column="0" Style="{StaticResource tilePanelState}" />
-                <CheckBox x:Name="toggleButton" Grid.Column="1" Style="{StaticResource tilePanelToggleButton }" HorizontalAlignment="Right" />
-            </Grid>
+            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource tilePanelIcon}" />
 
-            <StackPanel Grid.Row="1" Margin="0 20 0 0" HorizontalAlignment="Center">
-                <TextBlock Style="{StaticResource tilePanelIcon}" />
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                
                 <TextBlock Style="{StaticResource tilePanelDeviceName}"  />
                 <TextBlock Style="{StaticResource tilePanelDeviceType}"  />
             </StackPanel>
 
         </Grid>
-    </Border>
+    </Button>
 
 </UserControl>

@@ -14,11 +14,10 @@ namespace WPFApp.MVVM.Models
         public string DeviceType { get; set; } = "";
         public string Location { get; set; } = "";
         public string Owner { get; set; } = "";
-        public string DeviceState { get; set; } = "";
+        public bool DeviceState { get; set; }
 
         public string IconActive { get; set; } = "";
         public string IconInActive { get; set; } = "";
-        public string StateActive { get; set; } = "";
-        public string StateInActive { get; set; } = "";
+
     }
 }

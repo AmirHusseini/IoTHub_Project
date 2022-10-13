@@ -24,25 +24,24 @@ namespace WPFApp.MVVM.ViewModels
 {
     internal class KitchenViewModel : BaseViewModel
     {
-        private readonly NavigationStore _navigationStore;               
+        private readonly INavigationService _navigationStore;               
         private readonly IGetEventData _getEventData;
         private readonly IDeviceService _deviceService;
-        public ICommand NavigateToSettings { get; }
-        public KitchenViewModel(NavigationStore navigationStore, IDeviceService deviceService, IGetEventData getEventData)
+        
+        public KitchenViewModel(INavigationService navigationStore, IDeviceService deviceService, IGetEventData getEventData)
         {
             _navigationStore = navigationStore;
             _getEventData = getEventData;
             _deviceService = deviceService;
-            DeviceItems = new ObservableCollection<DeviceItem>();
-            NavigateToSettings = new NavigateCommand<KitchenViewModel>(navigationStore, () => new KitchenViewModel(_navigationStore, _deviceService, getEventData));            
-            
+            DeviceItems = new ObservableCollection<DeviceItem>();            
+
             SetClock();
-            SetWeatherAsync().ConfigureAwait(false);
+            SetTemperatureAsync().ConfigureAwait(false);
             PopulateDeviceItemsAsync().ConfigureAwait(false);
         }
 
 
-        public string Title => "Kitchen";
+        public string Title => "Kitchen & Dining";
         private ObservableCollection<DeviceItem>? _deviceItems;
         public ObservableCollection<DeviceItem>? DeviceItems
         {
@@ -74,8 +73,8 @@ namespace WPFApp.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
-        private string? _currentTemperature;
-        public string CurrentTemperature
+        private int _currentTemperature;
+        public int CurrentTemperature
         {
             get => _currentTemperature!;
             set
@@ -84,8 +83,8 @@ namespace WPFApp.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
-        private string? _currentHumidity;
-        public string CurrentHumidity
+        private int _currentHumidity;
+        public int CurrentHumidity
         {
             get => _currentHumidity!;
             set
@@ -94,27 +93,27 @@ namespace WPFApp.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
-        private async Task SetWeatherAsync()
+        private async Task SetTemperatureAsync()
         {
             WeatherResponse weather = await _getEventData.Setup();
-            
-            CurrentTemperature = weather.Temperature;
-            CurrentHumidity = weather.Humidity;
+
+            CurrentTemperature = (int)weather.Temperature;
+            CurrentHumidity = (int)weather.Humidity;
         }
         protected override async void second_timer_tick(object? sender, EventArgs e)
         {
-            SetClock();            
+            SetClock();
             await PopulateDeviceItemsAsync();
             base.second_timer_tick(sender, e);
         }
         protected override async void minute_timer_tick(object? sender, EventArgs e)
         {
-            await SetWeatherAsync();
+            await SetTemperatureAsync();
             base.minute_timer_tick(sender, e);
         }
         protected override async void hour_timer_tick(object? sender, EventArgs e)
         {
-            await SetWeatherAsync();
+            //await SetTemperatureAsync();
             base.hour_timer_tick(sender, e);
         }
 

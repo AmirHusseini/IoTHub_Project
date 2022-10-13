@@ -4,23 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPFApp.MVVM.ViewModels;
+using WPFApp.Services;
 
 namespace WPFApp.Helpers
 {
-    internal class NavigateCommand<T> : BaseCommand where T : BaseViewModel
+    internal class NavigateCommand : BaseCommand
     {
-        private readonly NavigationStore _navigationStore;
-        private readonly Func<T> _createViewModel;
+        private readonly INavigationService _navigationService;
 
-        public NavigateCommand(NavigationStore navigationStore, Func<T> createViewModel)
+        public NavigateCommand(INavigationService navigationService)
         {
-            _navigationStore = navigationStore;
-            _createViewModel = createViewModel;
+            _navigationService = navigationService;
         }
 
-        public override void Execute(object? parameter)
+        public override void Execute(object parameter)
         {
-            _navigationStore.CurrentViewModel = _createViewModel();
+            _navigationService.Navigate();
         }
     }
 }

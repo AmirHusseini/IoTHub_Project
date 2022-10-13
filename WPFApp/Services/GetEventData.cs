@@ -38,11 +38,9 @@ namespace WPFApp.Services
             {
                     await foreach (PartitionEvent receivedEvent in eventHubConsumerClient.ReadEventsFromPartitionAsync(partition, EventPosition.Latest))
                     {
-                        //WeatherResponse asd = new WeatherResponse();
+
                         var s = Encoding.UTF8.GetString(receivedEvent.Data.Body.ToArray());
                         var body = JsonConvert.DeserializeObject<WeatherResponse>(s);
-                        //var result = JsonConvert.DeserializeObject<dynamic>(body);
-                        //body = Encoding.UTF8.GetString(receivedEvent.Data.Body.ToArray());
                         return body;
                     }
                 

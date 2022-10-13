@@ -14,6 +14,7 @@
     <None Remove="Assets\Images\devicema.jpeg" />
     <None Remove="Assets\Images\kitchen.jpeg" />
     <None Remove="Assets\Images\livingroom.jpeg" />
+    <None Remove="Assets\Images\spacebackground.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +31,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Images\livingroom.jpeg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\spacebackground.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

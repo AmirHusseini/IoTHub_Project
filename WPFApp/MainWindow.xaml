@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPFApp" xmlns:views="clr-namespace:WPFApp.MVVM.Views" xmlns:viewModels="clr-namespace:WPFApp.MVVM.ViewModels" xmlns:components="clr-namespace:WPFApp.Components"
+        xmlns:local="clr-namespace:WPFApp" xmlns:views="clr-namespace:WPFApp.MVVM.Views" xmlns:viewmodels="clr-namespace:WPFApp.MVVM.ViewModels" xmlns:components="clr-namespace:WPFApp.Components"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
@@ -11,21 +11,31 @@
         Background="Transparent"        
         Title="MainWindow" Height="720" Width="1280">
 
-    <Border Background="#3f3f40">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
+    <Grid>
+        <Grid.Resources>
+            
+            <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
+                <views:HomeView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:KitchenViewModel}">
+                <views:KitchenView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:BedroomViewModel}">
+                <views:BedroomView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:LivingroomViewModel}">
+                <views:LivingroomView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:DeviceManagementViewModel}">
+                <views:DeviceManagementView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:LayoutViewModel}">
+                <components:MainMenuComponent/>
+            </DataTemplate>
 
-            <ContentControl Content="{Binding CurrentViewModel}">
-            <ContentControl.Resources>
-                    <DataTemplate DataType="{x:Type viewModels:KitchenViewModel}">
-                        <views:KitchenView />
-                    </DataTemplate>
-                </ContentControl.Resources>
-            </ContentControl>
-            <components:MainMenuComponent Grid.Row="1" Margin="0 -140 0 0" />
-        </Grid>
-    </Border>
+        </Grid.Resources>
+
+        <ContentControl Content="{Binding CurrentViewModel}" />
+    </Grid>
+
 </Window>

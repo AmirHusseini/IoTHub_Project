@@ -7,30 +7,49 @@
              xmlns:components="clr-namespace:WPFApp.Components"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280">
-    <Border>
-        <Border CornerRadius="10">
+    <Border CornerRadius="12">
+        
             <Border.Background>
                 <ImageBrush Opacity="0.75" ImageSource="/Assets/Images/devicema.jpeg" />
             </Border.Background>
-            <Grid Margin="0 10">
+
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="1.5*" />
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-
-
-                <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock Text="Device Management" Foreground="White" FontSize="42" FontWeight="bold" />
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <TextBlock Text="&#xE753;" FontFamily="Segoe MDL2 Assets" FontSize="62" Margin="0 0 15 0" Foreground="LightGray" />
+                    <TextBlock FontSize="22" Foreground="LightGray" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Run Text="{Binding CurrentTemperature}" FontSize="32" />
+                        <Run Text="°C" />
+                    </TextBlock>
                 </StackPanel>
-                <components:DeviceMenuComponent Grid.Row="1" Grid.Column="2" />
-
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding CurrentTime}" FontSize="42" Foreground="LightGray" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding CurrentDate}" FontSize="22" Foreground="LightGray" HorizontalAlignment="Center"/>
+                </StackPanel>
             </Grid>
-        </Border>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding Title}" FontSize="42" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Grid Grid.Column="2">
+                    <components:DeviceMenuComponent/>
+                </Grid>
+            </Grid>
+            
+        </Grid>
+
     </Border>
+    
 </UserControl>

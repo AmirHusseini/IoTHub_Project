@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Azure.Devices;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -14,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPFApp.MVVM.Models;
 
 namespace WPFApp.Components
 {
@@ -72,21 +75,6 @@ namespace WPFApp.Components
             set { SetValue(IconInActiveProperty, value); }
         }
 
-        public static readonly DependencyProperty StateActiveProperty = DependencyProperty.Register("StateActive", typeof(string), typeof(TileComponent));
-
-        public string StateActive
-        {
-            get { return (string)GetValue(StateActiveProperty); }
-            set { SetValue(StateActiveProperty, value); }
-        }
-
-        public static readonly DependencyProperty StateInActiveProperty = DependencyProperty.Register("StateInActive", typeof(string), typeof(TileComponent));
-
-        public string StateInActive
-        {
-            get { return (string)GetValue(StateInActiveProperty); }
-            set { SetValue(StateInActiveProperty, value); }
-        }
         private bool _deviceState;
 
         public bool DeviceState
@@ -97,6 +85,24 @@ namespace WPFApp.Components
                 _deviceState = value;
                 OnPropertyChanged();
             }
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var button = sender as Button;
+                var deviceItem = (DeviceItem)button!.DataContext;
+                deviceItem.DeviceState = IsChecked;
+                
+
+                using ServiceClient serviceClient = ServiceClient.CreateFromConnectionString("HostName=kyh-iothub-2.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=oj0gqypXDJVBFRzURDHu3zM7Xcu0H2AXRwl7o9/JMiw=");
+
+                var directMethod = new CloudToDeviceMethod("OnOff");
+                directMethod.SetPayloadJson(JsonConvert.SerializeObject(new { deviceState = IsChecked }));
+                await serviceClient.InvokeDeviceMethodAsync(deviceItem.DeviceId, directMethod); 
+            }
+            catch { }
         }
     }
 }
