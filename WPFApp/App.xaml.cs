@@ -31,7 +31,11 @@ namespace WPFApp
             services.AddScoped<IDeviceService, DeviceService>();
             services.AddScoped<IGetCurrentWeatherOutside, GetCurrentWeatherOutside>();
             services.AddScoped<IGetEventData, GetEventData>();
-            services.AddTransient<HomeViewModel>();
+            
+            services.AddTransient<HomeViewModel>(s => new HomeViewModel(
+                CreateHomeNavigationService(s),
+                s.GetRequiredService<IGetCurrentWeatherOutside>()
+                ));
 
             services.AddTransient<KitchenViewModel>(s => new KitchenViewModel(
                 CreateKitchenNavigationService(s),

@@ -20,14 +20,45 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border Background="CornflowerBlue" Margin="190,70,30,30" CornerRadius="15">
-                <Label Width="200" Foreground="White" HorizontalContentAlignment="Center" FontSize="20" Height="50" Content="Weather Today" Margin="70,10,70,200"/>
-            
-        </Border>
-        <Border Grid.Column="1" Background="CadetBlue" Margin="30,70,190,30" CornerRadius="15">
-            <Label Width="200" Foreground="White" HorizontalContentAlignment="Center" FontSize="20" Height="50" Content="Calender" Margin="70,10,70,200"/>
-        </Border>
-        <Border Grid.Row="1" Background="DarkKhaki" Margin="190,30,30,70" CornerRadius="15">
+            <Border Background="CornflowerBlue" Margin="302,70,30,21" CornerRadius="15">
+                <Grid>
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Label Grid.Row="0" Foreground="White" HorizontalContentAlignment="Center" FontSize="20" Height="50" Content="Weather Today" VerticalAlignment="Top"/>
+                    <TextBlock Grid.Row="1" FontFamily="{StaticResource FontAwesome-Regular}" HorizontalAlignment="Center" Text="Stockholm"/>
+
+                    <TextBlock Grid.Row="2" FontFamily="{StaticResource FontAwesome-Regular}" Margin="0 20 0 0" HorizontalAlignment="Center" >
+                        <Image Width="50" Source="{Binding Icon}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                        <Run Text="{Binding CurrentTemperature}"/>
+                        <Run Text="°C" />
+                    </TextBlock>
+                   
+                    <TextBlock Grid.Row="3" FontFamily="{StaticResource FontAwesome-Regular}" Margin="0 20 0 0" HorizontalAlignment="Center">
+                        <Run Text="Luftfuktighet" />
+                        <Run Text="{Binding CurrentHumidity}"/>
+                        <Run Text="%" />
+                    </TextBlock>
+                
+                </Grid>
+            </Border>
+        <Border Grid.Column="1" Background="CadetBlue" Margin="30,70,302,21" CornerRadius="15">
+                <StackPanel Margin="0,0,-10,0">
+                    <Label Foreground="White" HorizontalContentAlignment="Center" FontSize="20" Height="50" Content="Calender"/>
+                    <Calendar FontFamily="{StaticResource FontAwesome-Regular}" Background="Transparent" Height="181" Width="228"/>
+                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                        <TextBlock Text="Today is " FontFamily="{StaticResource FontAwesome-Regular}" HorizontalAlignment="Left" Margin="30 0 0 0"/>
+                        <TextBlock Text="{Binding CurrentDate}" Margin="10 0 0 0" FontFamily="{StaticResource FontAwesome-Regular}"/>
+                        <TextBlock Text="{Binding CurrentTime}" Margin="15 0 0 0" FontFamily="{StaticResource FontAwesome-Regular}"/>
+                        
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <Border Grid.Row="1" Background="DarkKhaki" Margin="302,21,30,70" CornerRadius="15">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
