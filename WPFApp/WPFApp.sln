@@ -13,6 +13,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiDevices", "..\Device.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Device.Fan.LivingRoom", "..\Device.Fan.LivingRoom\Device.Fan.LivingRoom.csproj", "{FF043680-66CC-4949-A3C7-8A948AE21CAD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GithubImages", "GithubImages", "{D5789610-40B3-4266-90D2-1CFC4AEAADF9}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\husse\Desktop\IotHubProject\DeviceConsole.jpg = C:\Users\husse\Desktop\IotHubProject\DeviceConsole.jpg
+		C:\Users\husse\Desktop\IotHubProject\DeviceFan_livingroom.jpg = C:\Users\husse\Desktop\IotHubProject\DeviceFan_livingroom.jpg
+		C:\Users\husse\Desktop\IotHubProject\DeviceManagement.jpg = C:\Users\husse\Desktop\IotHubProject\DeviceManagement.jpg
+		C:\Users\husse\Desktop\IotHubProject\HomeViewModel.jpg = C:\Users\husse\Desktop\IotHubProject\HomeViewModel.jpg
+		C:\Users\husse\Desktop\IotHubProject\KitchenViewModel.jpg = C:\Users\husse\Desktop\IotHubProject\KitchenViewModel.jpg
+		C:\Users\husse\Desktop\IotHubProject\LivingroomViewModel.jpg = C:\Users\husse\Desktop\IotHubProject\LivingroomViewModel.jpg
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
