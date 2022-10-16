@@ -37,8 +37,8 @@ namespace WPFApp.MVVM.ViewModels
             _navigationStore = navigationStore;
             _deviceService = deviceService;
 
-            SetClock();
-            PopulateDeviceItemsAsync().ConfigureAwait(false);
+            //SetClock();
+            //PopulateDeviceItemsAsync().ConfigureAwait(false);
         }
 
 

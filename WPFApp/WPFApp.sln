@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "..\WebApi\WebApi.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureFunctions", "..\AzureFunctions\AzureFunctions.csproj", "{1D6AD775-ACD5-495E-B480-3B4F9CD39735}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Device.Livingroom", "..\Device.ConsoleApp\Device.Livingroom.csproj", "{E6BD19A1-A8BB-4B83-9CB1-57D32399F41D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiDevices", "..\Device.ConsoleApp\MultiDevices.csproj", "{E6BD19A1-A8BB-4B83-9CB1-57D32399F41D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Device.Fan.LivingRoom", "..\Device.Fan.LivingRoom\Device.Fan.LivingRoom.csproj", "{FF043680-66CC-4949-A3C7-8A948AE21CAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{E6BD19A1-A8BB-4B83-9CB1-57D32399F41D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6BD19A1-A8BB-4B83-9CB1-57D32399F41D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6BD19A1-A8BB-4B83-9CB1-57D32399F41D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF043680-66CC-4949-A3C7-8A948AE21CAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF043680-66CC-4949-A3C7-8A948AE21CAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF043680-66CC-4949-A3C7-8A948AE21CAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF043680-66CC-4949-A3C7-8A948AE21CAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

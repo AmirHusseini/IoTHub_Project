@@ -98,6 +98,16 @@ namespace WPFApp.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
+        private string? _icon;
+        public string Icon
+        {
+            get => _icon!;
+            set
+            {
+                _icon = value;
+                OnPropertyChanged();
+            }
+        }
         protected override async void second_timer_tick(object? sender, EventArgs e)
         {
             SetClock();
@@ -118,7 +128,8 @@ namespace WPFApp.MVVM.ViewModels
         {            
             var weather = await _weatherOutside.GetWeatherDataAsync();
             CurrentTemperature = ((int)weather.Temperature - 273).ToString();
-            CurrentWeatherCondition = weather.WeatherCondition ?? "";
+            CurrentHumidity = weather.Humidity.ToString();
+            Icon = $"http://openweathermap.org/img/wn/{weather.Icon}@2x.png";
         }
         private async Task PopulateDeviceItemsAsync()
         {

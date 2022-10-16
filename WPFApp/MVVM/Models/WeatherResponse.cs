@@ -12,6 +12,8 @@ namespace WPFApp.MVVM.Models
 
         public int Humidity { get; set; }
 
+        public string Icon { get; set; }
+
         private string? _weatherCondition;
         public string? WeatherCondition
         {

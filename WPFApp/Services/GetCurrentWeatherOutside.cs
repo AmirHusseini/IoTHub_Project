@@ -18,7 +18,7 @@ namespace WPFApp.Services
     {
         public async Task<WeatherResponse> GetWeatherDataAsync()
         {
-            string uri = "https://api.openweathermap.org/data/2.5/weather?lat=59.1881139&lon=18.1140349&appid=7cfd9147cae9a58ff400c4fb14076490";
+            string uri = "https://api.openweathermap.org/data/2.5/weather?lat=59.334591&lon=18.063240&appid=7cfd9147cae9a58ff400c4fb14076490";
             
             try
             {
@@ -28,7 +28,8 @@ namespace WPFApp.Services
                 {
                     Temperature = (int)response!.main.temp,
                     Humidity = response.main.humidity,
-                    WeatherCondition = response.weather[0].main
+                    WeatherCondition = response.weather[0].main,
+                    Icon = response.weather[0].icon
                 };
             }
             catch { }

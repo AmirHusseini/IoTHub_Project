@@ -1,0 +1,10 @@
+﻿<Application x:Class="Device.Fan.LivingRoom.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Device.Fan.LivingRoom"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <FontFamily x:Key="FontAwesome-Regular">/Fonts/fa-regular-400.ttf#Font Awesome 6 Pro Regular</FontFamily>
+        <FontFamily x:Key="FontAwesome-Solid">/Fonts/fa-solid-900.ttf#Font Awesome 6 Pro Solid</FontFamily>
+    </Application.Resources>
+</Application>

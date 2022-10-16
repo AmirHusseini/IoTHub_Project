@@ -1,13 +1,9 @@
-﻿using System;
+﻿using Device.ConsoleApp.Models;
 using Microsoft.Azure.Devices.Client;
-using System.Text;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
 using Microsoft.Azure.Devices.Shared;
-using static Dapper.SqlMapper;
-using Device.ConsoleApp.Models;
+using Newtonsoft.Json;
 using System.Net.Http.Json;
-using Azure.Messaging.EventHubs.Consumer;
+using System.Text;
 
 namespace Device.ConsoleApp
 {
@@ -33,27 +29,26 @@ namespace Device.ConsoleApp
 
             deviceItem.DeviceId = Console.ReadLine();
 
-            
+
             using var client = new HttpClient();
             var response = await client.PostAsJsonAsync(apiUri, new { deviceId = deviceItem.DeviceId });
             if (response.IsSuccessStatusCode)
             {
                 deviceItem.ConnectionString = await response.Content.ReadAsStringAsync();
 
-                
-                deviceClient = DeviceClient.CreateFromConnectionString(deviceItem.ConnectionString, TransportType.Mqtt);                
+                deviceClient = DeviceClient.CreateFromConnectionString(deviceItem.ConnectionString, TransportType.Mqtt);
                 twin = await deviceClient.GetTwinAsync();
                 deviceItem.DeviceId = twin.DeviceId;
                 deviceItem.DeviceName = twin.Properties.Reported["deviceName"];
                 deviceItem.DeviceType = twin.Properties.Reported["deviceType"];
                 deviceItem.Location = twin.Properties.Reported["location"];
                 deviceItem.DeviceState = twin.Properties.Reported["deviceState"];
-                
+
                 if (string.IsNullOrEmpty(deviceItem.DeviceType) || string.IsNullOrEmpty(deviceItem.Location))
                 {
                     SetSettings();
                     await SetDeviceTwinAsync();
-                }    
+                }
             }
         }
         private static void SetSettings()
@@ -72,7 +67,7 @@ namespace Device.ConsoleApp
 
             Console.WriteLine("\n");
 
-            
+
         }
 
         private static async Task SetDeviceTwinAsync()
@@ -88,10 +83,11 @@ namespace Device.ConsoleApp
 
             await deviceClient.UpdateReportedPropertiesAsync(twinCollection);
         }
+
         private static async Task SetDirectMethodAsync()
         {
             Console.WriteLine("Configuring Direct Method (ON/OFF). Please wait...");
-            await deviceClient.SetMethodHandlerAsync("OnOff", OnOff, null);          
+            await deviceClient.SetMethodHandlerAsync("OnOff", OnOff, null);
         }
 
         private static Task<MethodResponse> OnOff(MethodRequest methodRequest, object userContext)
@@ -103,14 +99,14 @@ namespace Device.ConsoleApp
                 Console.WriteLine($"Changing DeviceState from {deviceItem.DeviceState} to {data!.deviceState}.");
                 deviceItem.DeviceState = data!.deviceState;
 
-                SetDeviceTwinAsync().ConfigureAwait(false);                                                
-                
+                SetDeviceTwinAsync().ConfigureAwait(false);
+
                 Console.WriteLine($"Device {deviceItem.DeviceId} configured and awaiting new commands.");
                 return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(deviceItem)), 200));
             }
             catch (Exception ex)
             {
-                return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(ex)), 400));
+                return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(ex.Message)), 400));
             }
         }
         private static async void SendDeviceToCloudMessagesAsync()
@@ -130,7 +126,7 @@ namespace Device.ConsoleApp
                     {
                         temperature = currentTemperature,
                         humidity = currentHumidity
-                    };                    
+                    };
 
                     var messageString = JsonConvert.SerializeObject(telemetryDataPoint);
 

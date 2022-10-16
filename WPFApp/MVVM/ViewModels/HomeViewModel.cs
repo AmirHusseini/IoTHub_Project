@@ -13,13 +13,11 @@ namespace WPFApp.MVVM.ViewModels
 {
     internal class HomeViewModel : BaseViewModel
     {
-        public string WelcomeMessage => "Welcome to my application.";
+        public string WelcomeMessage => "Welcome to my application.";       
 
-        //public ICommand NavigateLivingroomCommand { get; }
-
-        public HomeViewModel(/*INavigationService livingroomNavigationService*/)
+        public HomeViewModel()
         {
-            //NavigateLivingroomCommand = new NavigateCommand(livingroomNavigationService);
+            
 
         }
 
