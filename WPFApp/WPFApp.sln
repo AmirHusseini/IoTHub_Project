@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiDevices", "..\Device.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Device.Fan.LivingRoom", "..\Device.Fan.LivingRoom\Device.Fan.LivingRoom.csproj", "{FF043680-66CC-4949-A3C7-8A948AE21CAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Device.Tv.Livingroom", "..\Device.Tv.Livingroom\Device.Tv.Livingroom.csproj", "{56696C67-0C24-4656-9BCA-71BA7194A6FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Device.Lamp", "..\Device.Lamp\Device.Lamp.csproj", "{D89D590B-E7A6-4FBD-961B-FDF101EFC6F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{FF043680-66CC-4949-A3C7-8A948AE21CAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF043680-66CC-4949-A3C7-8A948AE21CAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF043680-66CC-4949-A3C7-8A948AE21CAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56696C67-0C24-4656-9BCA-71BA7194A6FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56696C67-0C24-4656-9BCA-71BA7194A6FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56696C67-0C24-4656-9BCA-71BA7194A6FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56696C67-0C24-4656-9BCA-71BA7194A6FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D89D590B-E7A6-4FBD-961B-FDF101EFC6F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D89D590B-E7A6-4FBD-961B-FDF101EFC6F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D89D590B-E7A6-4FBD-961B-FDF101EFC6F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D89D590B-E7A6-4FBD-961B-FDF101EFC6F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
