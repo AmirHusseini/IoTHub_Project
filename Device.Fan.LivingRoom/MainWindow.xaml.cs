@@ -15,7 +15,7 @@ namespace Device.Fan.LivingRoom
 {
     public partial class MainWindow : Window
     {
-        private static string apiUri = "https://iotprojectazurefunctions.azurewebsites.net/api/devices/connect";
+        private static string apiUri = "https://{your azurefunction}.azurewebsites.net/api/devices/connect";
         private static DeviceItem deviceItem = new DeviceItem();
         private static bool _isConnected = false;
         private static DeviceClient deviceClient;

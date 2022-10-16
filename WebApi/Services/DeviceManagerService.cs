@@ -1,7 +1,5 @@
 ﻿using Microsoft.Azure.Devices;
-using Microsoft.Azure.Devices.Client;
 using Microsoft.Azure.Devices.Shared;
-using Microsoft.Rest;
 
 namespace WebApi.Services
 {

@@ -1,15 +1,8 @@
 ﻿using Microsoft.Azure.Devices;
-using Microsoft.Azure.EventHubs;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
 using System.Threading.Tasks;
 using WPFApp.MVVM.Models;
 
@@ -25,8 +18,8 @@ namespace WPFApp.Services
 
     internal class DeviceService : IDeviceService
     {
-        private readonly string connectionString = "HostName=kyh-iothub-2.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=oj0gqypXDJVBFRzURDHu3zM7Xcu0H2AXRwl7o9/JMiw=";
-        private readonly string baseurl = "https://iotproject-webapi.azurewebsites.net/api/devices/";
+        private readonly string connectionString = "{your iothub connectionstring}";
+        private readonly string baseurl = "{your webapi}";
 
         public Task<Device> AddDeviceAsync(DeviceItem deviceItem)
         {

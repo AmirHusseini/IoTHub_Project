@@ -1,17 +1,12 @@
-// Default URL for triggering event grid function in the local environment.
-// http://localhost:7071/runtime/webhooks/EventGrid?functionName={functionname}
-using System;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.EventGrid;
-using Microsoft.Extensions.Logging;
-using Azure.Messaging.EventGrid;
 using Microsoft.Azure.Devices;
 using Microsoft.Azure.EventHubs;
-using Newtonsoft.Json.Linq;
+using Microsoft.Azure.WebJobs;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace AzureFunctions
 {
@@ -20,9 +15,7 @@ namespace AzureFunctions
         static RegistryManager registryManager = RegistryManager.CreateFromConnectionString(Environment.GetEnvironmentVariable("IotHubEndpoint"));
         [FunctionName("EventGridTriggerGetData")]
         public static async Task Run(EventData message, ILogger log)
-        {
-            //log.LogInformation($"\nSystemProperties:\n\t{string.Join(" | ", message.SystemProperties.Select(i => $"{i.Key}={i.Value}"))}");
-
+        {            
             if (message.SystemProperties["iothub-message-source"]?.ToString() == "Telemetry")
             {
                 var connectionDeviceId = message.SystemProperties["iothub-connection-device-id"].ToString();

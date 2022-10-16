@@ -1,22 +1,7 @@
-﻿using Microsoft.Azure.Devices;
-using Microsoft.Azure.Devices.Shared;
-using Microsoft.ServiceBus.Messaging;
-using Newtonsoft.Json;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Threading;
-using WPFApp.Helpers;
-using WPFApp.MVVM.Cores;
 using WPFApp.MVVM.Models;
 using WPFApp.Services;
 

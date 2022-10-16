@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Azure.Messaging.EventHubs.Consumer;
+using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Consumer;
-using Azure.Messaging.EventHubs.Processor;
-using Microsoft.Azure.Devices.Shared;
-using Microsoft.Azure.Devices;
-using Newtonsoft.Json;
 using WPFApp.MVVM.Models;
 
 namespace WPFApp.Services
@@ -19,9 +12,9 @@ namespace WPFApp.Services
     }
     internal class GetEventData : IGetEventData
     {
-        private const string EventHubsCompatibleEndpoint = "sb://ihsuprodamres005dednamespace.servicebus.windows.net/";
-        private const string EventHubsCompatiblePath = "iothub-ehub-kyh-iothub-21258178-90d1222e5e";
-        private const string IotHubSasKey = "oj0gqypXDJVBFRzURDHu3zM7Xcu0H2AXRwl7o9/JMiw=";
+        private const string EventHubsCompatibleEndpoint = "sb://{ednpoint}.servicebus.windows.net/";
+        private const string EventHubsCompatiblePath = "{compatiblepath}";
+        private const string IotHubSasKey = "{saskey}";
         private const string ConsumerGroup = "$Default";
         
         private static EventHubConsumerClient eventHubConsumerClient = null;

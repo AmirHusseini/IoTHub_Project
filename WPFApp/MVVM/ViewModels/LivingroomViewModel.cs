@@ -1,15 +1,7 @@
-﻿using Microsoft.Azure.WebJobs;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using WPFApp.Helpers;
 using WPFApp.MVVM.Models;
 using WPFApp.Services;
 

@@ -1,21 +1,9 @@
 ﻿using Microsoft.Azure.Devices;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WPFApp.MVVM.Models;
 
 namespace WPFApp.Components
@@ -96,7 +84,7 @@ namespace WPFApp.Components
                 deviceItem.DeviceState = IsChecked;
                 
 
-                using ServiceClient serviceClient = ServiceClient.CreateFromConnectionString("HostName=kyh-iothub-2.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=oj0gqypXDJVBFRzURDHu3zM7Xcu0H2AXRwl7o9/JMiw=");
+                using ServiceClient serviceClient = ServiceClient.CreateFromConnectionString("{IoTHub connectionstring}");
 
                 var directMethod = new CloudToDeviceMethod("OnOff");
                 directMethod.SetPayloadJson(JsonConvert.SerializeObject(new { deviceState = IsChecked }));

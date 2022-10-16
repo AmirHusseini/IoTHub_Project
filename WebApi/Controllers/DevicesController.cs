@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Devices;
-using Microsoft.Azure.Devices.Shared;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebApi.Data;
 using WebApi.Services;
 

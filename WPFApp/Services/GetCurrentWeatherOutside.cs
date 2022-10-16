@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
 using System.Threading.Tasks;
 using WPFApp.MVVM.Models;
 
@@ -18,7 +14,7 @@ namespace WPFApp.Services
     {
         public async Task<WeatherResponse> GetWeatherDataAsync()
         {
-            string uri = "https://api.openweathermap.org/data/2.5/weather?lat=59.334591&lon=18.063240&appid=7cfd9147cae9a58ff400c4fb14076490";
+            string uri = "https://api.openweathermap.org/data/2.5/weather?lat=59.334591&lon=18.063240&appid={your api key}";
             
             try
             {

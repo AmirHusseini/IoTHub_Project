@@ -13,7 +13,7 @@ namespace Device.ConsoleApp
         private static DeviceClient deviceClient;
         private static Twin twin;
         private static DeviceItem deviceItem = new DeviceItem();
-        private static string apiUri = "https://iotprojectazurefunctions.azurewebsites.net/api/devices/connect";
+        private static string apiUri = "https://{your azurefunction}.azurewebsites.net/api/devices/connect";
         public static async Task Main()
         {
             await GetConfigurationAsync();
